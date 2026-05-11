@@ -1,11 +1,10 @@
 import process from "node:process"
 import type { NewsItem } from "@shared/types"
-import type { Database } from "db0"
 import type { CacheInfo, CacheRow } from "../types"
 
 export class Cache {
   private db
-  constructor(db: Database) {
+  constructor(db: any) {
     this.db = db
   }
 

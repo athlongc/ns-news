@@ -29,4 +29,5 @@ export default defineSource(async () => {
         url,
       }
     })
+    .filter((item): item is { id: string, title: string, url: string } => Boolean(item.id && item.url))
 })

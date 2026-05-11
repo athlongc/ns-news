@@ -20,7 +20,10 @@ html.dark {
 }
 
 body {
-  --at-apply: color-base bg-base sprinkle-primary text-base;
+  --at-apply: color-base bg-base text-base;
+  background:
+    radial-gradient(ellipse 80% 45% at 50% -20%, rgba(230, 0, 18, 0.12), rgba(230, 0, 18, 0) 65%),
+    #151517;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;

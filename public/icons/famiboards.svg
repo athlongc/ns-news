@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Famiboards">
+  <rect width="200" height="200" rx="44" fill="#2f8f4e"/>
+  <circle cx="100" cy="92" r="46" fill="#f4f8f1"/>
+  <path d="M62 134c18-18 58-18 76 0" fill="none" stroke="#f4f8f1" stroke-width="16" stroke-linecap="round"/>
+  <text x="100" y="108" text-anchor="middle" fill="#2f8f4e" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800">FB</text>
+</svg>

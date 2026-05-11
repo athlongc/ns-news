@@ -44,6 +44,20 @@ export default defineConfig({
   extendTheme: (theme) => {
     // @ts-expect-error >_<
     theme.colors.primary = theme.colors.red
+    // @ts-expect-error custom project color
+    theme.colors.nintendo = {
+      50: "#fff1f1",
+      100: "#ffe0e0",
+      200: "#ffc7c7",
+      300: "#ff9f9f",
+      400: "#ff5f5f",
+      500: "#e60012",
+      600: "#c90010",
+      700: "#a8000d",
+      800: "#85000a",
+      900: "#5c0007",
+      DEFAULT: "#e60012",
+    }
     return theme
   },
 })

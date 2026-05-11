@@ -2,8 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { useIsFetching } from "@tanstack/react-query"
 import type { SourceID } from "@shared/types"
 import { NavBar } from "../navbar"
-import { Menu } from "./menu"
-import { currentSourcesAtom, goToTopAtom } from "~/atoms"
+import { currentSourcesAtom, goToTopAtom, titleModeAtom } from "~/atoms"
 
 function GoTop() {
   const { ok, fn: goToTop } = useAtomValue(goToTopAtom)
@@ -14,12 +13,6 @@ function GoTop() {
       className={$("i-ph:arrow-fat-up-duotone", ok ? "op-50 btn" : "op-0")}
       onClick={goToTop}
     />
-  )
-}
-
-function Github() {
-  return (
-    <button type="button" title="Github" className="i-ph:github-logo-duotone btn" onClick={() => window.open(Homepage)} />
   )
 }
 
@@ -45,23 +38,40 @@ function Refresh() {
   )
 }
 
+function TitleModeToggle() {
+  const [titleMode, setTitleMode] = useAtom(titleModeAtom)
+  const translated = titleMode === "translated"
+
+  return (
+    <button
+      type="button"
+      title={translated ? "显示原文标题" : "显示翻译标题"}
+      className={$([
+        "h-8 rounded-full border px-1 text-xs font-bold flex items-center gap-1",
+        "border-primary-600/30 bg-base/35 text-neutral-200",
+      ])}
+      onClick={() => setTitleMode(translated ? "original" : "translated")}
+    >
+      <span className={$("px-2 py-1 rounded-full", !translated && "bg-primary-600 text-white")}>原文</span>
+      <span className={$("px-2 py-1 rounded-full", translated && "bg-primary-600 text-white")}>译文</span>
+    </button>
+  )
+}
+
 export function Header() {
   return (
     <>
       <span className="flex justify-self-start">
         <Link to="/" className="flex gap-2 items-center">
-          <div className="h-10 w-10 bg-cover" title="logo" style={{ backgroundImage: "url(/icon.svg)" }} />
-          <span className="text-2xl font-brand line-height-none!">
-            <p>News</p>
-            <p className="mt--1">
-              <span className="color-primary-6">N</span>
-              <span>ow</span>
-            </p>
+          <img
+            src="/ns-avatar.jpg"
+            alt="NS新闻汇总"
+            className="h-11 w-11 rounded-full object-cover"
+          />
+          <span className="text-2xl font-bold line-height-none! whitespace-nowrap">
+            NS新闻汇总
           </span>
         </Link>
-        <a target="_blank" href={`${Homepage}/releases/tag/v${Version}`} className="btn text-sm ml-1 font-mono">
-          {`v${Version}`}
-        </a>
       </span>
       <span className="justify-self-center">
         <span className="hidden md:(inline-block)">
@@ -70,9 +80,8 @@ export function Header() {
       </span>
       <span className="justify-self-end flex gap-2 items-center text-xl text-primary-600 dark:text-primary">
         <GoTop />
+        <TitleModeToggle />
         <Refresh />
-        <Github />
-        <Menu />
       </span>
     </>
   )

@@ -12,7 +12,134 @@ const Time = {
   Slow: 60 * 60 * 1000,
 }
 
+const enabledNintendoSources = new Set([
+  "nintendo-japan",
+  "nintendo-hongkong",
+  "nintendo-official",
+  "nintendo-europe",
+  "nintendo-life",
+  "nintendo-everything",
+  "gonintendo",
+  "my-nintendo-news",
+  "ninten-switch",
+  "4gamer-switch",
+  "game-watch",
+  "famitsu-switch",
+  "reddit-switch",
+  "reddit-switch2",
+  "famiboards-gaming",
+  "steam",
+])
+
 export const originSources = {
+  "nintendo-japan": {
+    name: "任天堂日本",
+    column: "nintendo-japan",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.nintendo.com/jp/topics/",
+  },
+  "nintendo-hongkong": {
+    name: "任天堂香港",
+    column: "nintendo-hongkong",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.nintendo.com/hk/topics/",
+  },
+  "nintendo-official": {
+    name: "任天堂美国",
+    column: "nintendo-official",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.nintendo.com/us/whatsnew/",
+  },
+  "nintendo-europe": {
+    name: "任天堂欧洲",
+    column: "nintendo-europe",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.nintendo.com/en-gb/News/News-Updates-11145.html",
+  },
+  "nintendo-life": {
+    name: "Nintendo Life",
+    column: "nintendo-life",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.nintendolife.com/",
+  },
+  "nintendo-everything": {
+    name: "Nintendo Everything",
+    column: "nintendo-everything",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://nintendoeverything.com/",
+  },
+  "gonintendo": {
+    name: "GoNintendo",
+    column: "gonintendo",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://gonintendo.com/",
+  },
+  "my-nintendo-news": {
+    name: "My Nintendo News",
+    column: "my-nintendo-news",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://mynintendonews.com/",
+  },
+  "ninten-switch": {
+    name: "Ninten Switch",
+    column: "ninten-switch",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://ninten-switch.com/",
+  },
+  "4gamer-switch": {
+    name: "4Gamer Switch",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.4gamer.net/switch/",
+  },
+  "game-watch": {
+    name: "GAME Watch",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://game.watch.impress.co.jp/",
+  },
+  "famitsu-switch": {
+    name: "Famitsu Switch",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.famitsu.com/category/switch/page/1",
+  },
+  "reddit-switch": {
+    name: "Reddit Switch",
+    title: "热门前10",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.reddit.com/r/NintendoSwitch/",
+  },
+  "reddit-switch2": {
+    name: "Reddit Switch 2",
+    title: "热门前10",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://www.reddit.com/r/NintendoSwitch2/",
+  },
+  "famiboards-gaming": {
+    name: "Famiboards",
+    title: "24h热门",
+    column: "world",
+    color: "nintendo",
+    interval: Time.Common,
+    home: "https://famiboards.com/forums/gaming/",
+  },
   "v2ex": {
     name: "V2EX",
     color: "slate",
@@ -528,7 +655,8 @@ export function genSources() {
   })
 
   return typeSafeObjectFromEntries(
-    _.filter(([_, v]) => {
+    _.filter(([id, v]) => {
+      if (!enabledNintendoSources.has(id)) return false
       if (v.disable === "cf" && process.env.CF_PAGES) {
         return false
       } else {

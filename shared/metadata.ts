@@ -3,6 +3,36 @@ import { typeSafeObjectEntries, typeSafeObjectFromEntries } from "./type.util"
 import type { ColumnID, HiddenColumnID, Metadata, SourceID } from "./types"
 
 export const columns = {
+  home: {
+    zh: "首页",
+  },
+  "nintendo-japan": {
+    zh: "任天堂日本",
+  },
+  "nintendo-hongkong": {
+    zh: "任天堂香港",
+  },
+  "nintendo-official": {
+    zh: "任天堂美国",
+  },
+  "nintendo-europe": {
+    zh: "任天堂欧洲",
+  },
+  "nintendo-life": {
+    zh: "Nintendo Life",
+  },
+  "nintendo-everything": {
+    zh: "Nintendo Everything",
+  },
+  "gonintendo": {
+    zh: "GoNintendo",
+  },
+  "my-nintendo-news": {
+    zh: "My Nintendo News",
+  },
+  "ninten-switch": {
+    zh: "Ninten Switch",
+  },
   china: {
     zh: "国内",
   },
@@ -26,11 +56,28 @@ export const columns = {
   },
 } as const
 
-export const fixedColumnIds = ["focus", "hottest", "realtime"] as const satisfies Partial<ColumnID>[]
+export const fixedColumnIds = [
+  "home",
+  "focus",
+  "nintendo-japan",
+  "nintendo-hongkong",
+  "nintendo-official",
+  "nintendo-europe",
+  "nintendo-life",
+  "nintendo-everything",
+  "gonintendo",
+  "my-nintendo-news",
+  "ninten-switch",
+] as const satisfies Partial<ColumnID>[]
 export const hiddenColumns = Object.keys(columns).filter(id => !fixedColumnIds.includes(id as any)) as HiddenColumnID[]
 
 export const metadata: Metadata = typeSafeObjectFromEntries(typeSafeObjectEntries(columns).map(([k, v]) => {
   switch (k) {
+    case "home":
+      return [k, {
+        name: v.zh,
+        sources: typeSafeObjectEntries(sources).filter(([, v]) => !v.redirect).map(([k]) => k as SourceID),
+      }]
     case "focus":
       return [k, {
         name: v.zh,

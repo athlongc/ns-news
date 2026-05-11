@@ -1,9 +1,8 @@
-import type { Database } from "db0"
 import type { UserInfo } from "#/types"
 
 export class UserTable {
   private db
-  constructor(db: Database) {
+  constructor(db: any) {
     this.db = db
   }
 

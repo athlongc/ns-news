@@ -43,6 +43,7 @@ export function preprocessMetadata(target: PrimitiveMetadata) {
         typeSafeObjectEntries(target.data)
           .filter(([id]) => initialMetadata[id])
           .map(([id, s]) => {
+            if (id === "home") return [id, initialMetadata[id]]
             if (id === "focus") return [id, s.filter(k => sources[k]).map(k => sources[k].redirect ?? k)]
             const oldS = s.filter(k => initialMetadata[id].includes(k)).map(k => sources[k].redirect ?? k)
             const newS = initialMetadata[id].filter(k => !oldS.includes(k))

@@ -1,8 +1,6 @@
 import "~/styles/globals.css"
 import "virtual:uno.css"
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/router-devtools"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import type { QueryClient } from "@tanstack/react-query"
 import { isMobile } from "react-device-detect"
 import { Header } from "~/components/header"
@@ -46,7 +44,7 @@ function RootComponent() {
             "sticky top-0 z-10 backdrop-blur-md",
           ])}
           style={{
-            gridTemplateColumns: "50px auto 50px",
+            gridTemplateColumns: "max-content minmax(0, 1fr) max-content",
           }}
         >
           <Header />
@@ -66,12 +64,6 @@ function RootComponent() {
       </GlobalOverlayScrollbar>
       <Toast />
       <SearchBar />
-      {import.meta.env.DEV && (
-        <>
-          <ReactQueryDevtools buttonPosition="bottom-left" />
-          <TanStackRouterDevtools position="bottom-right" />
-        </>
-      )}
     </>
   )
 }

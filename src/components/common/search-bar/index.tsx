@@ -53,7 +53,7 @@ export function SearchBar() {
   )
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const [value, setValue] = useState<SourceID>("github-trending-today")
+  const [value, setValue] = useState<SourceID>("nintendo-official")
 
   useMount(() => {
     inputRef?.current?.focus()
@@ -124,7 +124,7 @@ function SourceItem({ item }: {
         <span
           className={$("w-4 h-4 rounded-md bg-cover")}
           style={{
-            backgroundImage: `url(/icons/${item.id.split("-")[0]}.png)`,
+            backgroundImage: `url(/icons/${item.id}.png), url(/icons/default.png)`,
           }}
         />
         <span>{item.name}</span>
