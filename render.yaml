@@ -8,3 +8,5 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22
+      - key: FAMIBOARDS_RSS_FALLBACK
+        value: true

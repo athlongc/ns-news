@@ -1,10 +1,10 @@
 import { XMLParser } from "fast-xml-parser"
 import type { RSSInfo } from "../types"
 
-export async function rss2json(url: string): Promise<RSSInfo | undefined> {
+export async function rss2json(url: string, options: any = {}): Promise<RSSInfo | undefined> {
   if (!/^https?:\/\/[^\s$.?#].\S*/i.test(url)) return
 
-  const data = await myFetch(url, { responseType: "text" as any }) as string
+  const data = await myFetch(url, { ...options, responseType: "text" as any }) as string
 
   const xml = new XMLParser({
     attributeNamePrefix: "",

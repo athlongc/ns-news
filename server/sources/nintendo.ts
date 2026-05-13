@@ -103,7 +103,7 @@ async function fetchFamiboardsPage(page: number) {
   return items
 }
 
-const famiboardsGaming24h: SourceGetter = async () => {
+async function fetchFamiboardsHtml24h() {
   const pages = await Promise.all([1, 2, 3, 4, 5].map(fetchFamiboardsPage))
   const unique = new Map<string | number, FamiboardsThread>()
   pages.flat().forEach(item => unique.set(item.id, item))
@@ -111,6 +111,34 @@ const famiboardsGaming24h: SourceGetter = async () => {
     .sort((a, b) => b.replies - a.replies || b.views - a.views)
     .map(({ replies, views, ...item }) => item)
     .slice(0, 10)
+
+  if (!items.length) throw new Error("Cannot parse Famiboards Gaming 24h threads")
+  return items
+}
+
+const famiboardsGaming24h: SourceGetter = async () => {
+  try {
+    return await fetchFamiboardsHtml24h()
+  } catch (e) {
+    if (process.env.FAMIBOARDS_RSS_FALLBACK !== "true") throw e
+  }
+
+  const since = Date.now() - 24 * 60 * 60 * 1000
+  const data = await rss2json(`${FamiboardsBaseURL}/forums/gaming/index.rss`, {
+    headers: {
+      Accept: "application/rss+xml, application/xml, text/xml, */*",
+      "Accept-Language": "en-US,en;q=0.9",
+    },
+  })
+  const items = data?.items
+    .filter(item => item.created && new Date(item.created).getTime() >= since)
+    .slice(0, 10)
+    .map(item => withSource("Famiboards", {
+      id: (item as any).id ?? item.link,
+      title: cleanText(item.title),
+      url: item.link,
+      pubDate: item.created,
+    })) ?? []
 
   if (!items.length) throw new Error("Cannot parse Famiboards Gaming 24h threads")
   return items
