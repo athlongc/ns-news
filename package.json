@@ -12,9 +12,10 @@
   "homepage": "https://github.com/ourongxing/newsnow",
   "scripts": {
     "dev": "npm run presource && vite dev",
-    "build": "npm run presource && vite build",
+    "build": "npm run presource && vite build && npm run node-public-assets",
     "lint": "eslint",
     "presource": "tsx ./scripts/favicon.ts && tsx ./scripts/source.ts",
+    "node-public-assets": "tsx ./scripts/node-public-assets.ts",
     "start": "node --env-file .env.server dist/output/server/index.mjs",
     "preview": "cross-env CF_PAGES=1 npm run build && wrangler pages dev dist/output/public",
     "deploy": "cross-env CF_PAGES=1 npm run build && wrangler pages deploy dist/output/public",
