@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ns-news
+    runtime: node
+    plan: free
+    buildCommand: npm install --legacy-peer-deps --no-package-lock && npm run build
+    startCommand: node dist/output/server/index.mjs
+    envVars:
+      - key: NODE_VERSION
+        value: 22
